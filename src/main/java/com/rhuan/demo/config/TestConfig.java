@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.rhuan.demo.entities.Order;
 import com.rhuan.demo.entities.User;
+import com.rhuan.demo.entities.enums.OrderStatus;
 import com.rhuan.demo.repositories.OrderRepository;
 import com.rhuan.demo.repositories.UserRepository;
 
@@ -34,11 +35,11 @@ public class TestConfig implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
 		
 		
-		Order o1 = new Order(null, u1, Instant.parse("2020-01-15T19:53:07Z"));
-		Order o2 = new Order(null, u1, Instant.parse("2020-04-10T20:53:07Z"));
-		Order o3 = new Order(null, u2, Instant.parse("2020-05-12T09:00:00Z"));
-		Order o4 = new Order(null, u3, Instant.parse("2020-05-17T12:30:08Z"));
-		Order o5 = new Order(null, u4, Instant.parse("2020-06-22T18:15:07Z"));
+		Order o1 = new Order(null, u1, Instant.parse("2020-01-15T19:53:07Z"), OrderStatus.CANCELED);
+		Order o2 = new Order(null, u1, Instant.parse("2020-04-10T20:53:07Z"), OrderStatus.DELIVERED);
+		Order o3 = new Order(null, u2, Instant.parse("2020-05-12T09:00:00Z"), OrderStatus.PAID);
+		Order o4 = new Order(null, u3, Instant.parse("2020-05-17T12:30:08Z"), OrderStatus.SHIPPED);
+		Order o5 = new Order(null, u4, Instant.parse("2020-06-22T18:15:07Z"), OrderStatus.WAITING_PAYMENT);
 		
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3, o4, o5));
 	}

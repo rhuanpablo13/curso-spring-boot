@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+import com.rhuan.demo.entities.enums.OrderStatus;
 
 @Entity
 @Table(name = "TB_ORDER")
@@ -27,6 +27,7 @@ public class Order implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant instant;
 	
+	private Integer orderStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "client_id") //nome da pk na tabela de order
@@ -36,11 +37,12 @@ public class Order implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Order(Long id, User client, Instant instant) {
+	public Order(Long id, User client, Instant instant, OrderStatus orderStatus) {
 		super();
 		this.id = id;
 		this.client = client;
 		this.instant = instant;
+		setOrderStatus(orderStatus);
 	}
 
 	public Long getId() {
@@ -67,6 +69,15 @@ public class Order implements Serializable {
 		this.instant = instant;
 	}
 
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus.getCode();
+	}
+	
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus);
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,9 +105,7 @@ public class Order implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", instant=" + instant + ", client=" + client + "]";
+		return "Order [id=" + id + ", instant=" + instant + ", orderStatus=" + OrderStatus.valueOf(orderStatus) + " - " + orderStatus + ", client=" + client + "]";
 	}
-
-	
 	
 }
